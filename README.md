@@ -148,7 +148,6 @@ comfyui-ops/
 ├── data/                  # Reference data (presets, platform specs)
 ├── workflows/             # 6 executable workflow JSONs
 ├── models/                # User's custom models (empty by default)
-├── image-bank/            # Reference images
 ├── comfyui-mcp/           # MCP server (git submodule)
 └── outputs/               # Generated outputs (gitignored)
 ```

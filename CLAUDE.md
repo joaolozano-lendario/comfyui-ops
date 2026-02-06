@@ -180,7 +180,6 @@ comfyui-ops/
 ├── workflows/                   # 6 executable workflow JSONs (API format)
 ├── data/                        # Reference data (presets, specs)
 ├── models/                      # User's custom models (empty by default)
-├── image-bank/                  # Reference images
 └── outputs/                     # Generated outputs (gitignored)
 ```
 
