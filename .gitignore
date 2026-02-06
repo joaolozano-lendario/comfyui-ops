@@ -1,0 +1,25 @@
+# Generated outputs (keep directory structure via .gitkeep)
+outputs/*
+!outputs/.gitkeep
+
+# Node modules (comfyui-mcp build artifacts)
+node_modules/
+
+# Environment files
+.env
+.env.local
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Large model files (user provides their own)
+models/*.safetensors
+models/*.ckpt
+models/*.pt
+!models/.gitkeep
+
+# Temporary files
+*.tmp
+*.bak

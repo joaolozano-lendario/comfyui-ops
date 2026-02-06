@@ -1,0 +1,45 @@
+{
+  "1": {
+    "class_type": "IFGeminiNode",
+    "inputs": {
+      "prompt": "YOUR_PROMPT_HERE",
+      "operation_mode": "generate_images",
+      "model": "gemini-2.5-flash",
+      "temperature": 0.9,
+      "seed": 42,
+      "batch_count": 1,
+      "aspect_ratio": "1:1",
+      "api_provider": "gemini",
+      "system_prompt": "",
+      "max_images": 1,
+      "keep_alive": true
+    }
+  },
+  "5": {
+    "class_type": "FaceRestoreCFCodeFormer",
+    "inputs": {
+      "image": ["1", 0],
+      "fidelity": 0.7
+    }
+  },
+  "2": {
+    "class_type": "UpscaleModelLoader",
+    "inputs": {
+      "model_name": "4x-UltraSharp.pth"
+    }
+  },
+  "3": {
+    "class_type": "ImageUpscaleWithModel",
+    "inputs": {
+      "upscale_model": ["2", 0],
+      "image": ["5", 0]
+    }
+  },
+  "4": {
+    "class_type": "SaveImage",
+    "inputs": {
+      "images": ["3", 0],
+      "filename_prefix": "portrait"
+    }
+  }
+}

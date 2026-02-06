@@ -1,0 +1,3 @@
+[submodule "comfyui-mcp"]
+	path = comfyui-mcp
+	url = https://github.com/shawnrushefsky/comfyui-mcp.git

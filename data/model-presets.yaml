@@ -1,0 +1,715 @@
+# ComfyUI Model Presets
+# Version: 1.0.0
+# Updated: 2026-02-05
+# Maps model filenames to optimal generation settings
+
+version: "1.0.0"
+updated: "2026-02-05"
+
+# ═══════════════════════════════════════════════════════════════
+# FLUX MODELS
+# ═══════════════════════════════════════════════════════════════
+
+flux_schnell:
+  pattern: "flux1-schnell*"
+  architecture: "flux"
+  variant: "schnell"
+
+  optimal_settings:
+    steps: 4
+    cfg: 1.0
+    sampler: "euler"
+    scheduler: "simple"
+    width: 1024
+    height: 1024
+
+  technical:
+    weight_dtype: "fp8_e4m3fn"
+    supports_negative: false
+    supports_weights: false
+    max_sequence_length: 256
+
+  prompting:
+    style: "natural"
+    template_id: "txt2img_flux_schnell"
+    max_prompt_length: 200
+
+  use_cases:
+    - "Rapid prototyping"
+    - "Quick previews"
+    - "Batch generation"
+    - "Real-time workflows"
+
+  notes: "4 steps only - more steps don't improve quality. CFG must be 1.0."
+
+flux_dev:
+  pattern: "flux1-dev*"
+  architecture: "flux"
+  variant: "dev"
+
+  optimal_settings:
+    steps: 20
+    cfg: 3.5
+    sampler: "euler"
+    scheduler: "simple"
+    width: 1024
+    height: 1024
+
+  technical:
+    weight_dtype: "fp8_e4m3fn"
+    supports_negative: false
+    supports_weights: false
+    max_sequence_length: 512
+
+  prompting:
+    style: "natural"
+    template_id: "txt2img_flux_dev"
+    max_prompt_length: 500
+
+  quality_presets:
+    draft:
+      steps: 15
+      cfg: 3.5
+    standard:
+      steps: 20
+      cfg: 3.5
+    high:
+      steps: 30
+      cfg: 3.5
+    maximum:
+      steps: 50
+      cfg: 3.5
+
+  use_cases:
+    - "High-quality output"
+    - "Detailed prompts"
+    - "Professional work"
+    - "Final deliverables"
+
+  notes: "Best quality Flux variant. 20-30 steps is sweet spot."
+
+flux_pro:
+  pattern: "flux1-pro*"
+  architecture: "flux"
+  variant: "pro"
+
+  optimal_settings:
+    steps: 25
+    cfg: 3.5
+    sampler: "euler"
+    scheduler: "simple"
+    width: 1024
+    height: 1024
+
+  technical:
+    weight_dtype: "fp16"
+    supports_negative: false
+    supports_weights: false
+    max_sequence_length: 512
+
+  prompting:
+    style: "natural"
+    template_id: "txt2img_flux_dev"
+    max_prompt_length: 500
+
+  use_cases:
+    - "Commercial work"
+    - "Maximum quality"
+    - "Complex scenes"
+
+  notes: "Pro tier quality. API-only in production, local dev requires license."
+
+# ═══════════════════════════════════════════════════════════════
+# STABLE DIFFUSION 1.5 MODELS
+# ═══════════════════════════════════════════════════════════════
+
+sd15_base:
+  pattern: "v1-5-pruned*"
+  architecture: "sd15"
+  variant: "base"
+
+  optimal_settings:
+    steps: 25
+    cfg: 7.5
+    sampler: "dpmpp_2m_karras"
+    scheduler: "karras"
+    width: 512
+    height: 512
+
+  technical:
+    weight_dtype: "fp16"
+    supports_negative: true
+    supports_weights: true
+    max_sequence_length: 77
+
+  prompting:
+    style: "keyword"
+    template_id: "txt2img_sd15"
+    max_prompt_length: 150
+
+  use_cases:
+    - "Fast generation"
+    - "Low VRAM systems"
+    - "Fine-tuned models"
+
+  notes: "Original SD. Many community fine-tunes available."
+
+sd15_realistic:
+  pattern: "realisticVision*"
+  architecture: "sd15"
+  variant: "realistic"
+
+  optimal_settings:
+    steps: 28
+    cfg: 7.0
+    sampler: "dpmpp_2m_karras"
+    scheduler: "karras"
+    width: 512
+    height: 768
+
+  technical:
+    weight_dtype: "fp16"
+    supports_negative: true
+    supports_weights: true
+    max_sequence_length: 77
+
+  prompting:
+    style: "keyword"
+    template_id: "txt2img_sd15"
+    max_prompt_length: 150
+
+  use_cases:
+    - "Photorealistic portraits"
+    - "People photography"
+    - "Product shots"
+
+  notes: "Popular realistic photo model. Benefits from VAE swap."
+
+sd15_dreamshaper:
+  pattern: "dreamshaper*"
+  architecture: "sd15"
+  variant: "artistic"
+
+  optimal_settings:
+    steps: 30
+    cfg: 8.0
+    sampler: "dpmpp_2m_karras"
+    scheduler: "karras"
+    width: 512
+    height: 512
+
+  technical:
+    weight_dtype: "fp16"
+    supports_negative: true
+    supports_weights: true
+    max_sequence_length: 77
+
+  prompting:
+    style: "keyword"
+    template_id: "txt2img_sd15"
+    max_prompt_length: 150
+
+  use_cases:
+    - "Artistic renders"
+    - "Fantasy art"
+    - "Stylized images"
+
+  notes: "Versatile model, slightly higher CFG for vibrant results."
+
+# ═══════════════════════════════════════════════════════════════
+# STABLE DIFFUSION XL MODELS
+# ═══════════════════════════════════════════════════════════════
+
+sdxl_base:
+  pattern: "sd_xl_base*"
+  architecture: "sdxl"
+  variant: "base"
+
+  optimal_settings:
+    steps: 25
+    cfg: 6.0
+    sampler: "dpmpp_2m_sde_karras"
+    scheduler: "karras"
+    width: 1024
+    height: 1024
+
+  technical:
+    weight_dtype: "fp16"
+    supports_negative: true
+    supports_weights: true
+    max_sequence_length: 77
+
+  prompting:
+    style: "hybrid"
+    template_id: "txt2img_sdxl"
+    max_prompt_length: 300
+
+  use_cases:
+    - "High resolution"
+    - "General purpose"
+    - "Natural language prompts"
+
+  notes: "Use with refiner for best quality. 6.0 CFG prevents oversaturation."
+
+sdxl_turbo:
+  pattern: "sd_xl_turbo*"
+  architecture: "sdxl"
+  variant: "turbo"
+
+  optimal_settings:
+    steps: 6
+    cfg: 2.0
+    sampler: "euler_ancestral"
+    scheduler: "sgm_uniform"
+    width: 1024
+    height: 1024
+
+  technical:
+    weight_dtype: "fp16"
+    supports_negative: false
+    supports_weights: true
+    max_sequence_length: 77
+
+  prompting:
+    style: "hybrid"
+    template_id: "txt2img_sdxl_turbo"
+    max_prompt_length: 200
+
+  use_cases:
+    - "Rapid iteration"
+    - "Real-time generation"
+    - "Previews"
+
+  notes: "Distilled model. 4-8 steps only. Low CFG required."
+
+sdxl_lightning:
+  pattern: "sdxl_lightning*"
+  architecture: "sdxl"
+  variant: "lightning"
+
+  optimal_settings:
+    steps: 8
+    cfg: 2.0
+    sampler: "euler_ancestral"
+    scheduler: "sgm_uniform"
+    width: 1024
+    height: 1024
+
+  technical:
+    weight_dtype: "fp16"
+    supports_negative: false
+    supports_weights: true
+    max_sequence_length: 77
+
+  prompting:
+    style: "hybrid"
+    template_id: "txt2img_sdxl_turbo"
+    max_prompt_length: 200
+
+  use_cases:
+    - "Fast high-quality generation"
+    - "Iteration workflows"
+
+  notes: "Better quality than Turbo. 8 steps recommended."
+
+# ═══════════════════════════════════════════════════════════════
+# STABLE DIFFUSION 3 MODELS
+# ═══════════════════════════════════════════════════════════════
+
+sd3_medium:
+  pattern: "sd3_medium*"
+  architecture: "sd3"
+  variant: "medium"
+
+  optimal_settings:
+    steps: 28
+    cfg: 4.5
+    sampler: "dpmpp_2m"
+    scheduler: "sgm_uniform"
+    width: 1024
+    height: 1024
+
+  technical:
+    weight_dtype: "fp16"
+    supports_negative: true
+    supports_weights: false
+    max_sequence_length: 77
+
+  prompting:
+    style: "natural"
+    template_id: "txt2img_sd3"
+    max_prompt_length: 400
+
+  use_cases:
+    - "Text in images"
+    - "Complex compositions"
+    - "Multi-subject scenes"
+
+  notes: "28 steps is native training value. Excellent text rendering."
+
+sd35_large:
+  pattern: "sd3.5_large*"
+  architecture: "sd3"
+  variant: "large"
+
+  optimal_settings:
+    steps: 28
+    cfg: 4.5
+    sampler: "dpmpp_2m"
+    scheduler: "sgm_uniform"
+    width: 1024
+    height: 1024
+
+  technical:
+    weight_dtype: "fp8_e4m3fn"
+    supports_negative: true
+    supports_weights: false
+    max_sequence_length: 77
+
+  prompting:
+    style: "natural"
+    template_id: "txt2img_sd3"
+    max_prompt_length: 400
+
+  use_cases:
+    - "Maximum quality SD3"
+    - "Professional work"
+    - "Detailed scenes"
+
+  notes: "Largest SD3 variant. Best quality but slowest."
+
+sd35_medium:
+  pattern: "sd3.5_medium*"
+  architecture: "sd3"
+  variant: "medium"
+
+  optimal_settings:
+    steps: 28
+    cfg: 4.5
+    sampler: "dpmpp_2m"
+    scheduler: "sgm_uniform"
+    width: 1024
+    height: 1024
+
+  technical:
+    weight_dtype: "fp16"
+    supports_negative: true
+    supports_weights: false
+    max_sequence_length: 77
+
+  prompting:
+    style: "natural"
+    template_id: "txt2img_sd3"
+    max_prompt_length: 400
+
+  use_cases:
+    - "Balanced speed/quality"
+    - "General purpose SD3"
+
+  notes: "Good balance of speed and quality."
+
+# ═══════════════════════════════════════════════════════════════
+# SPECIALTY MODELS
+# ═══════════════════════════════════════════════════════════════
+
+hunyuan_dit:
+  pattern: "hunyuan*"
+  architecture: "hunyuan"
+  variant: "standard"
+
+  optimal_settings:
+    steps: 25
+    cfg: 5.0
+    sampler: "dpmpp_2m"
+    scheduler: "sgm_uniform"
+    width: 1024
+    height: 1024
+
+  technical:
+    weight_dtype: "fp16"
+    supports_negative: true
+    supports_weights: false
+    max_sequence_length: 256
+
+  prompting:
+    style: "natural"
+    template_id: "txt2img_hunyuan"
+    max_prompt_length: 1000
+
+  use_cases:
+    - "Multi-lingual content"
+    - "Chinese/English prompts"
+    - "Cultural content"
+    - "Long detailed prompts"
+
+  notes: "Excellent multi-lingual support. Handles very long prompts."
+
+qwen_image:
+  pattern: "qwen*"
+  architecture: "qwen"
+  variant: "standard"
+
+  optimal_settings:
+    steps: 30
+    cfg: 4.0
+    sampler: "euler"
+    scheduler: "simple"
+    width: 1024
+    height: 1024
+
+  technical:
+    weight_dtype: "fp16"
+    supports_negative: false
+    supports_weights: false
+    max_sequence_length: 512
+
+  prompting:
+    style: "natural"
+    template_id: "txt2img_qwen"
+    max_prompt_length: 500
+
+  use_cases:
+    - "Complex instructions"
+    - "Reasoning-based generation"
+    - "Structured prompts"
+
+  notes: "LLM-based encoder. Excellent instruction following."
+
+playground_v2:
+  pattern: "playground*"
+  architecture: "sdxl"
+  variant: "playground"
+
+  optimal_settings:
+    steps: 25
+    cfg: 6.0
+    sampler: "dpmpp_2m_sde_karras"
+    scheduler: "karras"
+    width: 1024
+    height: 1024
+
+  technical:
+    weight_dtype: "fp16"
+    supports_negative: true
+    supports_weights: true
+    max_sequence_length: 77
+
+  prompting:
+    style: "hybrid"
+    template_id: "txt2img_sdxl"
+    max_prompt_length: 300
+
+  use_cases:
+    - "Vibrant colors"
+    - "Artistic style"
+    - "Creative work"
+
+  notes: "SDXL fine-tune with aesthetic improvements."
+
+# ═══════════════════════════════════════════════════════════════
+# FALLBACK / UNKNOWN MODELS
+# ═══════════════════════════════════════════════════════════════
+
+unknown_sd15:
+  pattern: "*"
+  architecture: "sd15"
+  variant: "unknown"
+
+  optimal_settings:
+    steps: 25
+    cfg: 7.5
+    sampler: "dpmpp_2m_karras"
+    scheduler: "karras"
+    width: 512
+    height: 512
+
+  technical:
+    weight_dtype: "fp16"
+    supports_negative: true
+    supports_weights: true
+    max_sequence_length: 77
+
+  prompting:
+    style: "keyword"
+    template_id: "txt2img_sd15"
+    max_prompt_length: 150
+
+  notes: "Conservative defaults for unrecognized SD1.5 models."
+
+unknown_sdxl:
+  pattern: "*"
+  architecture: "sdxl"
+  variant: "unknown"
+
+  optimal_settings:
+    steps: 25
+    cfg: 6.0
+    sampler: "dpmpp_2m_sde_karras"
+    scheduler: "karras"
+    width: 1024
+    height: 1024
+
+  technical:
+    weight_dtype: "fp16"
+    supports_negative: true
+    supports_weights: true
+    max_sequence_length: 77
+
+  prompting:
+    style: "hybrid"
+    template_id: "txt2img_sdxl"
+    max_prompt_length: 300
+
+  notes: "Conservative defaults for unrecognized SDXL models."
+
+# ═══════════════════════════════════════════════════════════════
+# ARCHITECTURE DETECTION RULES
+# ═══════════════════════════════════════════════════════════════
+
+detection_rules:
+  # Check patterns in this order
+  priority:
+    - "flux1-schnell"
+    - "flux1-dev"
+    - "flux1-pro"
+    - "sd3.5_large"
+    - "sd3.5_medium"
+    - "sd3_medium"
+    - "sd_xl_turbo"
+    - "sdxl_lightning"
+    - "sd_xl_base"
+    - "sd_xl_refiner"
+    - "playground"
+    - "hunyuan"
+    - "qwen"
+    - "realisticVision"
+    - "dreamshaper"
+    - "v1-5-pruned"
+
+  # If filename contains these substrings
+  flux_indicators:
+    - "flux"
+    - "flux1"
+
+  sdxl_indicators:
+    - "xl"
+    - "sdxl"
+    - "sd_xl"
+
+  sd3_indicators:
+    - "sd3"
+    - "sd3.5"
+
+  sd15_indicators:
+    - "v1-5"
+    - "sd15"
+    - "sd-v1"
+
+  # Default fallbacks by file size (if all else fails)
+  size_based_fallback:
+    small: "sd15"      # < 3GB
+    medium: "sdxl"     # 3-8GB
+    large: "flux"      # > 8GB
+
+# ═══════════════════════════════════════════════════════════════
+# PRESET COLLECTIONS
+# ═══════════════════════════════════════════════════════════════
+
+preset_collections:
+  speed_tier:
+    fastest:
+      - "flux_schnell"
+      - "sdxl_turbo"
+      - "sdxl_lightning"
+    fast:
+      - "flux_dev"
+      - "sd15_base"
+    standard:
+      - "sdxl_base"
+      - "sd3_medium"
+    slow:
+      - "sd35_large"
+      - "hunyuan_dit"
+
+  quality_tier:
+    draft:
+      - "flux_schnell"
+      - "sdxl_turbo"
+    production:
+      - "flux_dev"
+      - "sdxl_base"
+      - "sd3_medium"
+    premium:
+      - "flux_pro"
+      - "sd35_large"
+
+  use_case:
+    photorealism:
+      - "flux_dev"
+      - "sd15_realistic"
+      - "sdxl_base"
+    artistic:
+      - "sd15_dreamshaper"
+      - "playground_v2"
+      - "hunyuan_dit"
+    text_rendering:
+      - "sd3_medium"
+      - "sd35_large"
+    multilingual:
+      - "hunyuan_dit"
+      - "qwen_image"
+    rapid_iteration:
+      - "flux_schnell"
+      - "sdxl_turbo"
+      - "sdxl_lightning"
+
+# ═══════════════════════════════════════════════════════════════
+# SAMPLER RECOMMENDATIONS
+# ═══════════════════════════════════════════════════════════════
+
+sampler_guide:
+  euler:
+    best_for: ["flux", "sd3", "qwen"]
+    description: "Simple, fast, good for natural language models"
+    steps_range: [4, 50]
+
+  euler_ancestral:
+    best_for: ["sdxl_turbo", "sdxl_lightning"]
+    description: "Adds noise, more creative, good for fast models"
+    steps_range: [4, 15]
+
+  dpmpp_2m_karras:
+    best_for: ["sd15", "sdxl"]
+    description: "High quality, versatile, good convergence"
+    steps_range: [20, 40]
+
+  dpmpp_2m_sde_karras:
+    best_for: ["sdxl"]
+    description: "Best quality SDXL, slightly slower"
+    steps_range: [20, 35]
+
+  dpmpp_2m:
+    best_for: ["sd3", "hunyuan"]
+    description: "Clean results, predictable"
+    steps_range: [20, 40]
+
+# ═══════════════════════════════════════════════════════════════
+# SCHEDULER RECOMMENDATIONS
+# ═══════════════════════════════════════════════════════════════
+
+scheduler_guide:
+  simple:
+    best_for: ["flux"]
+    description: "Linear schedule, simple and effective"
+
+  karras:
+    best_for: ["sd15", "sdxl"]
+    description: "Non-linear, better quality, more steps at end"
+
+  sgm_uniform:
+    best_for: ["sd3", "hunyuan"]
+    description: "Uniform noise schedule, stable"
+
+  exponential:
+    best_for: ["experimental"]
+    description: "Front-loads denoising, can be faster"

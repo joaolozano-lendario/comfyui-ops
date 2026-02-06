@@ -1,0 +1,494 @@
+# ComfyUI Prompting Guides by Model Architecture
+# Version: 1.0.0
+# Updated: 2026-02-05
+
+version: "1.0.0"
+updated: "2026-02-05"
+
+# ═══════════════════════════════════════════════════════════════
+# STABLE DIFFUSION 1.5
+# ═══════════════════════════════════════════════════════════════
+
+sd15:
+  name: "Stable Diffusion 1.5"
+  architecture: "sd15"
+  prompting_style: "keyword"
+
+  characteristics:
+    - "Keyword-based prompting (tags separated by commas)"
+    - "Quality boosters essential"
+    - "Negative prompts critical"
+    - "Supports prompt weights: (word:1.2) or ((word))"
+    - "Order matters: early tokens weighted more"
+
+  optimal_settings:
+    resolution: "512x512"
+    cfg_scale: "7-8"
+    steps: "20-30"
+    sampler: "DPM++ 2M Karras"
+    scheduler: "karras"
+
+  example_positive_prompt: |
+    masterpiece, best quality, highly detailed, professional photography,
+    portrait of a woman in business attire, modern office background,
+    natural lighting, sharp focus, 8k uhd, dslr, soft lighting, high quality
+
+  example_negative_prompt: |
+    lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit,
+    fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts,
+    signature, watermark, username, blurry, artist name, deformed, disfigured
+
+  quality_boosters:
+    - "masterpiece"
+    - "best quality"
+    - "highly detailed"
+    - "8k uhd"
+    - "professional photography"
+    - "sharp focus"
+
+  common_mistakes:
+    - "Writing in natural sentences (use comma-separated keywords)"
+    - "Omitting negative prompts (quality degrades significantly)"
+    - "Not including quality boosters"
+    - "Using resolutions above 512x512 without upscaling"
+    - "Forgetting to specify lighting and quality"
+
+  tips:
+    - "Front-load most important keywords"
+    - "Use parentheses for emphasis: (keyword:1.2)"
+    - "Combine multiple quality tags"
+    - "Always specify medium (photo, painting, 3d render, etc.)"
+    - "Include lighting description"
+
+# ═══════════════════════════════════════════════════════════════
+# STABLE DIFFUSION XL
+# ═══════════════════════════════════════════════════════════════
+
+sdxl:
+  name: "Stable Diffusion XL"
+  architecture: "sdxl"
+  prompting_style: "hybrid"
+
+  characteristics:
+    - "Hybrid prompting: natural language + keywords work"
+    - "Less dependent on negative prompts"
+    - "Better understanding of concepts and compositions"
+    - "Supports weights but less necessary"
+    - "Dual text encoders (CLIP + OpenCLIP)"
+
+  optimal_settings:
+    resolution: "1024x1024"
+    cfg_scale: "5-7"
+    steps: "20-30"
+    sampler: "DPM++ 2M SDE Karras"
+    scheduler: "karras"
+
+  example_positive_prompt: |
+    A professional portrait photograph of a woman in elegant business attire,
+    standing in a modern minimalist office with floor-to-ceiling windows.
+    Soft natural lighting from the side, shallow depth of field, bokeh background.
+    Shot on Canon EOS R5, 85mm f/1.4 lens, cinematic color grading, 8k resolution
+
+  example_negative_prompt: |
+    low quality, blurry, distorted, deformed, ugly, disfigured,
+    bad anatomy, extra limbs, cartoon, illustration
+
+  quality_boosters:
+    - "professional photography"
+    - "8k resolution"
+    - "cinematic"
+    - "high detail"
+    - "shot on [camera model]"
+
+  common_mistakes:
+    - "Over-relying on SD1.5 keyword patterns"
+    - "Using excessive negative prompts"
+    - "Not leveraging natural language capability"
+    - "Setting CFG too high (causes oversaturation)"
+    - "Using resolutions below 1024x1024"
+
+  tips:
+    - "Write more naturally than SD1.5"
+    - "Describe scene, subject, lighting, camera in coherent sentences"
+    - "Negative prompts less critical but still helpful"
+    - "Keep CFG between 5-7 for best results"
+    - "SDXL handles complex compositions better"
+
+# ═══════════════════════════════════════════════════════════════
+# FLUX SCHNELL
+# ═══════════════════════════════════════════════════════════════
+
+flux_schnell:
+  name: "Flux Schnell"
+  architecture: "flux"
+  prompting_style: "natural"
+
+  characteristics:
+    - "Natural language ONLY"
+    - "NO negative prompts (ignored)"
+    - "NO prompt weights (not supported)"
+    - "Extremely fast (4 steps)"
+    - "Fixed CFG of 1.0"
+    - "Simple, clear descriptions work best"
+
+  optimal_settings:
+    resolution: "1024x1024"
+    cfg_scale: "1.0"
+    steps: "4"
+    sampler: "euler"
+    scheduler: "simple"
+
+  example_positive_prompt: |
+    A professional headshot of a confident businesswoman in her 30s wearing
+    a navy blue blazer, taken in a modern office with soft window lighting.
+    The photo is sharp and clear with a blurred background.
+
+  example_negative_prompt: null  # Not supported
+
+  quality_boosters:
+    - "professional"
+    - "high quality"
+    - "clear"
+    - "sharp"
+    - "well-lit"
+
+  common_mistakes:
+    - "Using negative prompts (completely ignored)"
+    - "Using prompt weights like (word:1.2)"
+    - "Using keyword-style comma-separated tags"
+    - "Setting steps above 4"
+    - "Setting CFG above 1.0"
+
+  tips:
+    - "Write like you're describing the image to someone"
+    - "Be specific but concise"
+    - "Describe what you want, not what you don't want"
+    - "Specify quality in natural language ('high quality', 'professional')"
+    - "Trust the 4-step speed - more steps don't improve quality"
+    - "Keep prompts under 200 words"
+
+# ═══════════════════════════════════════════════════════════════
+# FLUX DEV
+# ═══════════════════════════════════════════════════════════════
+
+flux_dev:
+  name: "Flux Dev"
+  architecture: "flux"
+  prompting_style: "natural"
+
+  characteristics:
+    - "Natural language ONLY"
+    - "NO negative prompts (ignored)"
+    - "NO prompt weights (not supported)"
+    - "Higher quality than Schnell"
+    - "More steps for refinement"
+    - "Better detail and coherence"
+
+  optimal_settings:
+    resolution: "1024x1024"
+    cfg_scale: "3.5"
+    steps: "20-50"
+    sampler: "euler"
+    scheduler: "simple"
+
+  example_positive_prompt: |
+    A hyper-realistic portrait photograph of a female executive in her late 30s,
+    wearing an impeccably tailored charcoal gray suit. She stands confidently
+    in a corner office with panoramic city views visible through floor-to-ceiling
+    windows behind her. The lighting is sophisticated three-point studio lighting
+    with a key light from the left creating subtle shadows that define her features,
+    fill light from the right, and rim lighting from behind separating her from
+    the background. Shot with a medium format Hasselblad camera using an 80mm lens
+    at f/2.8 for shallow depth of field, keeping her face razor sharp while the
+    city background dissolves into elegant bokeh. Color graded with rich, deep tones
+    and slightly desaturated for a modern corporate aesthetic.
+
+  example_negative_prompt: null  # Not supported
+
+  quality_boosters:
+    - "hyper-realistic"
+    - "professional photography"
+    - "high resolution"
+    - "sharp detail"
+    - "cinematic lighting"
+    - "shot with [specific camera]"
+
+  common_mistakes:
+    - "Using negative prompts"
+    - "Using keyword-style prompting"
+    - "Using prompt weights"
+    - "Being too vague"
+    - "Not specifying technical details"
+
+  tips:
+    - "More descriptive than Schnell - leverage the extra steps"
+    - "Include technical photography details (lens, aperture, lighting)"
+    - "Describe lighting setup in detail"
+    - "Can handle longer, more elaborate descriptions (300-500 words)"
+    - "Be specific about materials, textures, atmosphere"
+    - "20-30 steps usually sufficient, 50 for maximum quality"
+
+# ═══════════════════════════════════════════════════════════════
+# STABLE DIFFUSION 3 / 3.5
+# ═══════════════════════════════════════════════════════════════
+
+sd3:
+  name: "Stable Diffusion 3 / 3.5"
+  architecture: "sd3"
+  prompting_style: "natural"
+
+  characteristics:
+    - "Natural language preferred"
+    - "NO prompt weights (not supported)"
+    - "Negative prompts optional but can help"
+    - "Excellent text rendering capability"
+    - "Better prompt adherence than SDXL"
+    - "Multimodal understanding"
+
+  optimal_settings:
+    resolution: "1024x1024"
+    cfg_scale: "4.5"
+    steps: "28"
+    sampler: "dpmpp_2m"
+    scheduler: "sgm_uniform"
+
+  example_positive_prompt: |
+    A magazine cover photograph featuring a successful entrepreneur in her office.
+    She's wearing a modern business suit in deep emerald green, sitting at a
+    glass desk with a sleek laptop. Behind her, a large window reveals a city
+    skyline at golden hour. The composition follows the rule of thirds with her
+    positioned on the left side. Professional studio lighting creates a warm,
+    aspirational mood. The image should feel polished and editorial, suitable
+    for Fortune or Forbes magazine. Sharp focus on her face, slight background blur.
+
+  example_negative_prompt: |
+    blurry, low quality, distorted, amateur, poorly lit, cluttered
+
+  quality_boosters:
+    - "professional photography"
+    - "editorial quality"
+    - "magazine cover"
+    - "polished"
+    - "high resolution"
+
+  common_mistakes:
+    - "Using prompt weights syntax"
+    - "Keyword-style prompting"
+    - "Overly complex negative prompts"
+    - "Not leveraging text rendering capability"
+    - "Setting CFG too high"
+
+  tips:
+    - "Excellent for images with text (signs, logos, etc.)"
+    - "Describe composition and layout explicitly"
+    - "Natural language works best"
+    - "Keep CFG around 4-5 for natural results"
+    - "28 steps is the sweet spot (model's native training)"
+    - "Can specify multiple subjects and their relationships clearly"
+
+# ═══════════════════════════════════════════════════════════════
+# QWEN IMAGE
+# ═══════════════════════════════════════════════════════════════
+
+qwen_image:
+  name: "Qwen Image"
+  architecture: "qwen"
+  prompting_style: "natural"
+
+  characteristics:
+    - "LLM-based text encoder (Qwen)"
+    - "Natural language ONLY"
+    - "NO prompt weights"
+    - "NO negative prompts (not supported)"
+    - "Excellent instruction following"
+    - "Can handle complex reasoning in prompts"
+
+  optimal_settings:
+    resolution: "1024x1024"
+    cfg_scale: "3-5"
+    steps: "25-40"
+    sampler: "euler"
+    scheduler: "simple"
+
+  example_positive_prompt: |
+    Create a professional business portrait with the following specifications:
+
+    Subject: A confident female tech CEO in her early 40s
+    Attire: Black turtleneck (Steve Jobs style) and blazer
+    Setting: Minimalist modern office with white walls and natural wood accents
+    Lighting: Soft diffused natural light from a large window to camera left,
+    creating gentle shadows that add dimension to her face
+    Composition: Head and shoulders shot, subject centered, looking directly
+    at camera with a slight confident smile
+    Camera: Simulated medium format look, equivalent to 80mm lens, shallow
+    depth of field (f/2.0), background softly blurred
+    Mood: Professional, approachable, innovative, trustworthy
+    Color palette: Muted, sophisticated - blacks, whites, warm wood tones
+    Style: Editorial corporate photography suitable for Forbes or Wired magazine
+
+  example_negative_prompt: null  # Not supported
+
+  quality_boosters:
+    - "professional"
+    - "high quality"
+    - "editorial"
+    - "polished"
+    - "magazine-worthy"
+
+  common_mistakes:
+    - "Using keyword-style prompting"
+    - "Using negative prompts"
+    - "Using prompt weight syntax"
+    - "Being too brief (model benefits from detail)"
+    - "Not structuring instructions clearly"
+
+  tips:
+    - "Write like instructions to a photographer"
+    - "Can use structured format (Subject:, Setting:, Lighting:, etc.)"
+    - "Excellent at following complex multi-part instructions"
+    - "Benefits from reasoning language ('in order to...', 'so that...')"
+    - "Can handle 500+ word prompts effectively"
+    - "Specify 'why' elements are included for better results"
+
+# ═══════════════════════════════════════════════════════════════
+# HUNYUAN IMAGE
+# ═══════════════════════════════════════════════════════════════
+
+hunyuan:
+  name: "Hunyuan Image"
+  architecture: "hunyuan"
+  prompting_style: "natural"
+
+  characteristics:
+    - "Natural language with strong multi-lingual support"
+    - "Supports prompts over 1000 characters"
+    - "Negative prompts optional but supported"
+    - "Excellent at Chinese and English"
+    - "Strong style transfer capabilities"
+    - "Good at complex scenes"
+
+  optimal_settings:
+    resolution: "1024x1024"
+    cfg_scale: "4-7"
+    steps: "20-50"
+    sampler: "dpmpp_2m"
+    scheduler: "sgm_uniform"
+
+  example_positive_prompt: |
+    A striking corporate portrait photograph of a Chinese-American businesswoman,
+    approximately 35 years old, photographed in a contemporary Shanghai office
+    tower. She wears a tailored navy pinstripe suit with a crisp white shirt,
+    exuding confidence and professionalism. The composition places her slightly
+    off-center, following the golden ratio, with the iconic Shanghai skyline
+    visible through floor-to-ceiling windows in the background, slightly out of
+    focus. The time is late afternoon, golden hour, with warm sunlight streaming
+    through the windows creating a rim light effect that outlines her silhouette.
+    A subtle fill light from the left prevents harsh shadows. Her expression is
+    calm and focused, eyes looking slightly above the camera, suggesting vision
+    and forward-thinking leadership. The color palette is sophisticated: deep
+    blues, warm golds, and cool grays. Shot on a full-frame camera with an 85mm
+    portrait lens at f/1.8 for beautiful bokeh. The overall aesthetic should feel
+    like a Bloomberg Businessweek cover - polished, aspirational, globally minded.
+
+  example_negative_prompt: |
+    low quality, blurry, distorted, amateur photography, harsh lighting,
+    cluttered background, unnatural poses
+
+  quality_boosters:
+    - "professional photography"
+    - "high resolution"
+    - "polished"
+    - "magazine quality"
+    - "cinematic"
+    - "editorial"
+
+  common_mistakes:
+    - "Using keyword-style prompting"
+    - "Being too brief (model handles long prompts well)"
+    - "Not leveraging multi-lingual capability"
+    - "Setting CFG too low (can be higher than Flux)"
+    - "Not specifying cultural context when relevant"
+
+  tips:
+    - "Excellent for cross-cultural content"
+    - "Can mix English and Chinese in prompts"
+    - "Handles very long, detailed descriptions (1000+ chars)"
+    - "Strong at architectural and environmental context"
+    - "Negative prompts can help refine quality"
+    - "CFG range is wider (4-7) compared to other modern models"
+    - "Good at specific artistic styles and aesthetics"
+
+# ═══════════════════════════════════════════════════════════════
+# GENERAL PROMPTING BEST PRACTICES
+# ═══════════════════════════════════════════════════════════════
+
+general_tips:
+  structure:
+    - "Subject first, then context, then technical details"
+    - "Describe lighting explicitly"
+    - "Specify camera/lens when appropriate"
+    - "Include mood and color palette"
+    - "Mention intended use (editorial, advertising, etc.)"
+
+  lighting:
+    - "Natural light: golden hour, overcast, direct sun, etc."
+    - "Studio: three-point, Rembrandt, butterfly, etc."
+    - "Ambient: soft, diffused, harsh, dramatic, etc."
+    - "Direction: front, side, back, top, bottom"
+
+  composition:
+    - "Rule of thirds"
+    - "Golden ratio"
+    - "Centered"
+    - "Off-center"
+    - "Foreground/background elements"
+
+  camera_technical:
+    - "Focal length: 24mm (wide), 50mm (standard), 85mm (portrait), 200mm (telephoto)"
+    - "Aperture: f/1.4 (very shallow DOF), f/2.8, f/5.6, f/11 (deep DOF)"
+    - "DOF: shallow/deep depth of field"
+    - "Bokeh: quality of background blur"
+
+  quality_descriptors:
+    - "Professional photography"
+    - "Editorial quality"
+    - "Magazine cover"
+    - "High resolution"
+    - "Sharp focus"
+    - "Cinematic"
+    - "Studio quality"
+
+# ═══════════════════════════════════════════════════════════════
+# MODEL SELECTION GUIDE
+# ═══════════════════════════════════════════════════════════════
+
+model_selection:
+  speed_priority:
+    first: "flux_schnell"
+    second: "sd15"
+    third: "sdxl"
+
+  quality_priority:
+    first: "flux_dev"
+    second: "sd3"
+    third: "hunyuan"
+
+  text_in_image:
+    first: "sd3"
+    second: "hunyuan"
+    third: "flux_dev"
+
+  artistic_style:
+    first: "hunyuan"
+    second: "flux_dev"
+    third: "sd3"
+
+  photorealism:
+    first: "flux_dev"
+    second: "sd3"
+    third: "sdxl"
+
+  multilingual:
+    first: "hunyuan"
+    second: "qwen_image"
+    third: "sd3"

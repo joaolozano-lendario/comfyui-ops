@@ -1,0 +1,32 @@
+{
+  "1": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "YOUR_INPUT_IMAGE.png"
+    }
+  },
+  "2": {
+    "class_type": "IFGeminiNode",
+    "inputs": {
+      "prompt": "YOUR_PROMPT_HERE",
+      "operation_mode": "generate_images",
+      "model": "gemini-2.5-flash",
+      "temperature": 0.8,
+      "seed": 42,
+      "batch_count": 1,
+      "aspect_ratio": "16:9",
+      "api_provider": "gemini",
+      "system_prompt": "",
+      "max_images": 1,
+      "keep_alive": true,
+      "images": ["1", 0]
+    }
+  },
+  "3": {
+    "class_type": "SaveImage",
+    "inputs": {
+      "images": ["2", 0],
+      "filename_prefix": "img2img"
+    }
+  }
+}
